@@ -878,7 +878,7 @@
                 
                 // Find the first business account
                 if (user.business_memberships && user.business_memberships.length > 0) {
-                    accountId = user.business_memberships[0].business.account_id;
+                    accountId = user.business_memberships[0].business.id;
                 }
 
                 updateUserInfo();
