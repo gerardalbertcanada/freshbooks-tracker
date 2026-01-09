@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Hours Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --border: #30363d;
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-hover: #79b8ff;
+            --success: #3fb950;
+            --warning: #d29922;
+            --danger: #f85149;
+            --freshbooks-green: #0b7a3e;
+            --freshbooks-green-hover: #0d9148;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #a371f7);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .user-info .avatar {
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .settings-btn, .logout-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .settings-btn:hover, .logout-btn:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+
+        .logout-btn:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        /* Login Screen */
+        .login-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+        }
+
+        .login-screen .logo-large {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), #a371f7);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-screen h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-screen p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 400px;
+        }
+
+        .login-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--freshbooks-green);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .login-btn:hover {
+            background: var(--freshbooks-green-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(11, 122, 62, 0.3);
+        }
+
+        .login-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .login-note {
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            border: none;
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-primary);
+        }
+
+        /* Main Content */
+        .dashboard {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .project-selector {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .project-selector select {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 300px;
+        }
+
+        .project-selector select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .refresh-btn {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .refresh-btn:hover {
+            background: var(--accent);
+            color: var(--bg-primary);
+            border-color: var(--accent);
+        }
+
+        .refresh-btn.loading svg {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Chart Container */
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-top: 1rem;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .stat-value.success { color: var(--success); }
+        .stat-value.warning { color: var(--warning); }
+        .stat-value.danger { color: var(--danger); }
+
+        /* Status Messages */
+        .status-message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .status-message.info {
+            background: rgba(88, 166, 255, 0.1);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            color: var(--accent);
+        }
+
+        .status-message.error {
+            background: rgba(248, 81, 73, 0.1);
+            border: 1px solid rgba(248, 81, 73, 0.3);
+            color: var(--danger);
+        }
+
+        .status-message.success {
+            background: rgba(63, 185, 80, 0.1);
+            border: 1px solid rgba(63, 185, 80, 0.3);
+            color: var(--success);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-primary);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .loading-overlay.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-overlay p {
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 3000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background: var(--danger);
+            color: white;
+        }
+
+        .toast.success {
+            background: var(--success);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Connecting to FreshBooks...</p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <div class="container">
+        <!-- Login Screen -->
+        <div id="loginScreen" class="login-screen" style="display: none;">
+            <div class="logo-large">⏱</div>
+            <h2>Project Hours Tracker</h2>
+            <p>Connect your FreshBooks account to compare estimated vs actual project hours.</p>
+            <button class="login-btn" onclick="loginWithFreshBooks()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                    <polyline points="10 17 15 12 10 7"></polyline>
+                    <line x1="15" y1="12" x2="3" y2="12"></line>
+                </svg>
+                Login with FreshBooks
+            </button>
+            <p class="login-note">You'll be redirected to FreshBooks to authorize access.</p>
+        </div>
+
+        <!-- Main Dashboard -->
+        <div id="dashboard" style="display: none;">
+            <header>
+                <div class="logo">
+                    <div class="logo-icon">⏱</div>
+                    <h1>Project Hours Tracker</h1>
+                </div>
+                <div class="header-actions">
+                    <div id="userInfo" class="user-info" style="display: none;">
+                        <div class="avatar" id="userAvatar">?</div>
+                        <span id="userName">User</span>
+                    </div>
+                    <button class="settings-btn" onclick="openSettings()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path>
+                        </svg>
+                        Settings
+                    </button>
+                    <button class="logout-btn" onclick="logout()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Logout
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Select Project</span>
+                    </div>
+                    <div class="project-selector">
+                        <select id="projectSelect" onchange="onProjectChange()">
+                            <option value="">-- Select a project --</option>
+                        </select>
+                        <button class="refresh-btn" onclick="refreshData()" title="Refresh data">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 4v6h-6M1 20v-6h6"></path>
+                                <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="statsContainer" class="stats-grid" style="display: none;">
+                    <div class="stat-card">
+                        <div class="stat-label">Estimated Hours</div>
+                        <div id="estimatedHours" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Actual Hours</div>
+                        <div id="actualHours" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Remaining</div>
+                        <div id="remainingHours" class="stat-value">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Progress</div>
+                        <div id="progressPercent" class="stat-value">0%</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Hours Comparison</span>
+                    </div>
+                    <div id="chartMessage" class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M3 3v18h18"></path>
+                            <path d="M18 17V9M13 17V5M8 17v-3"></path>
+                        </svg>
+                        <h3>No Project Selected</h3>
+                        <p>Select a project from the dropdown to view hours comparison</p>
+                    </div>
+                    <div class="chart-container" style="display: none;">
+                        <canvas id="hoursChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p>FreshBooks + Google Sheets Integration • Built for Project Management</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-overlay">
+        <div class="modal">
+            <h2>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path>
+                </svg>
+                Google Sheets Configuration
+            </h2>
+            
+            <div class="form-group">
+                <label>Google Sheet URL</label>
+                <input type="text" id="googleSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+                <small>Sheet must be published to web with columns: Project Name, Estimated Hours</small>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeSettings()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSettings()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let auth = {
+            accessToken: null,
+            refreshToken: null,
+            expiresAt: null
+        };
+        let user = null;
+        let accountId = null;
+        let projects = [];
+        let estimatedHours = {};
+        let chart = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check for OAuth callback
+            if (window.location.hash) {
+                const params = new URLSearchParams(window.location.hash.substring(1));
+                const accessToken = params.get('access_token');
+                const refreshToken = params.get('refresh_token');
+                const expiresIn = params.get('expires_in');
+
+                if (accessToken) {
+                    auth.accessToken = accessToken;
+                    auth.refreshToken = refreshToken;
+                    auth.expiresAt = Date.now() + (parseInt(expiresIn) * 1000);
+                    saveAuth();
+                    
+                    // Clear the hash
+                    history.replaceState(null, '', window.location.pathname);
+                }
+            }
+
+            // Check for errors
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            if (error) {
+                showToast('error', `Login failed: ${error}`);
+                history.replaceState(null, '', window.location.pathname);
+            }
+
+            // Load saved auth
+            loadAuth();
+            loadGoogleSheetUrl();
+
+            if (auth.accessToken) {
+                await initializeDashboard();
+            } else {
+                hideLoading();
+                showLoginScreen();
+            }
+        });
+
+        function showLoading() {
+            document.getElementById('loadingOverlay').classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+        }
+
+        function showLoginScreen() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+        }
+
+        function showToast(type, message) {
+            const toast = document.getElementById('toast');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        function saveAuth() {
+            localStorage.setItem('freshbooksAuth', JSON.stringify(auth));
+        }
+
+        function loadAuth() {
+            const saved = localStorage.getItem('freshbooksAuth');
+            if (saved) {
+                auth = JSON.parse(saved);
+                // Check if token is expired
+                if (auth.expiresAt && Date.now() > auth.expiresAt) {
+                    // Token expired, try to refresh
+                    refreshAccessToken();
+                }
+            }
+        }
+
+        function loadGoogleSheetUrl() {
+            const url = localStorage.getItem('googleSheetUrl');
+            if (url) {
+                document.getElementById('googleSheetUrl').value = url;
+            }
+        }
+
+        function saveGoogleSheetUrl() {
+            const url = document.getElementById('googleSheetUrl').value.trim();
+            localStorage.setItem('googleSheetUrl', url);
+        }
+
+        function loginWithFreshBooks() {
+            window.location.href = '/.netlify/functions/auth';
+        }
+
+        function logout() {
+            auth = { accessToken: null, refreshToken: null, expiresAt: null };
+            user = null;
+            accountId = null;
+            projects = [];
+            localStorage.removeItem('freshbooksAuth');
+            showLoginScreen();
+        }
+
+        async function refreshAccessToken() {
+            if (!auth.refreshToken) {
+                logout();
+                return false;
+            }
+
+            try {
+                const response = await fetch('/.netlify/functions/refresh', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ refresh_token: auth.refreshToken })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Refresh failed');
+                }
+
+                const data = await response.json();
+                auth.accessToken = data.access_token;
+                auth.refreshToken = data.refresh_token;
+                auth.expiresAt = Date.now() + (data.expires_in * 1000);
+                saveAuth();
+                return true;
+            } catch (err) {
+                console.error('Token refresh failed:', err);
+                logout();
+                return false;
+            }
+        }
+
+        async function apiFetch(path) {
+            // Check if token needs refresh
+            if (auth.expiresAt && Date.now() > auth.expiresAt - 60000) {
+                await refreshAccessToken();
+            }
+
+            const response = await fetch(`/.netlify/functions/api?path=${encodeURIComponent(path)}`, {
+                headers: {
+                    'Authorization': `Bearer ${auth.accessToken}`
+                }
+            });
+
+            if (response.status === 401) {
+                const refreshed = await refreshAccessToken();
+                if (refreshed) {
+                    return apiFetch(path);
+                }
+                throw new Error('Unauthorized');
+            }
+
+            return response.json();
+        }
+
+        async function initializeDashboard() {
+            showLoading();
+            try {
+                // Get user identity
+                const identityData = await apiFetch('/auth/api/v1/users/me');
+                user = identityData.response;
+                
+                // Find the first business account
+                if (user.business_memberships && user.business_memberships.length > 0) {
+                    accountId = user.business_memberships[0].business.account_id;
+                }
+
+                updateUserInfo();
+                showDashboard();
+                await refreshData();
+            } catch (err) {
+                console.error('Initialization failed:', err);
+                showToast('error', 'Failed to connect to FreshBooks');
+                logout();
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function updateUserInfo() {
+            if (user) {
+                const name = `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'User';
+                document.getElementById('userName').textContent = name;
+                document.getElementById('userAvatar').textContent = name.charAt(0).toUpperCase();
+                document.getElementById('userInfo').style.display = 'flex';
+            }
+        }
+
+        async function refreshData() {
+            const refreshBtn = document.querySelector('.refresh-btn');
+            refreshBtn.classList.add('loading');
+
+            try {
+                await Promise.all([
+                    fetchFreshBooksProjects(),
+                    fetchGoogleSheetEstimates()
+                ]);
+                populateProjectDropdown();
+                showToast('success', 'Data refreshed successfully');
+            } catch (error) {
+                console.error('Error refreshing data:', error);
+                showToast('error', 'Failed to fetch data');
+            } finally {
+                refreshBtn.classList.remove('loading');
+            }
+        }
+
+        async function fetchFreshBooksProjects() {
+            if (!accountId) {
+                console.warn('No account ID found');
+                return;
+            }
+
+            try {
+                const data = await apiFetch(`/projects/business/${accountId}/projects`);
+                
+                if (data.projects) {
+                    projects = data.projects.map(p => ({
+                        id: p.id,
+                        title: p.title,
+                        logged_hours: p.logged_duration ? p.logged_duration / 3600 : 0
+                    }));
+                }
+            } catch (err) {
+                console.error('Failed to fetch projects:', err);
+                throw err;
+            }
+        }
+
+        async function fetchGoogleSheetEstimates() {
+            const url = localStorage.getItem('googleSheetUrl');
+            if (!url) return;
+
+            const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            if (!match) return;
+
+            const sheetId = match[1];
+            const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error('Google Sheets error');
+
+                const csvText = await response.text();
+                parseEstimatesCSV(csvText);
+            } catch (err) {
+                console.error('Failed to fetch estimates:', err);
+            }
+        }
+
+        function parseEstimatesCSV(csvText) {
+            const lines = csvText.split('\n');
+            estimatedHours = {};
+
+            for (let i = 1; i < lines.length; i++) {
+                const line = lines[i].trim();
+                if (!line) continue;
+
+                const parts = line.split(',');
+                if (parts.length >= 2) {
+                    const projectName = parts[0].replace(/"/g, '').trim();
+                    const hours = parseFloat(parts[1].replace(/"/g, '').trim());
+                    if (projectName && !isNaN(hours)) {
+                        estimatedHours[projectName] = hours;
+                    }
+                }
+            }
+        }
+
+        function populateProjectDropdown() {
+            const select = document.getElementById('projectSelect');
+            select.innerHTML = '<option value="">-- Select a project --</option>';
+
+            projects.forEach(project => {
+                const option = document.createElement('option');
+                option.value = project.id;
+                option.textContent = project.title;
+                select.appendChild(option);
+            });
+        }
+
+        function onProjectChange() {
+            const select = document.getElementById('projectSelect');
+            const projectId = select.value;
+
+            if (!projectId) {
+                hideChart();
+                return;
+            }
+
+            const project = projects.find(p => p.id == projectId);
+            if (project) {
+                const estimated = estimatedHours[project.title] || 0;
+                updateChart(project.title, project.logged_hours, estimated);
+            }
+        }
+
+        function updateChart(projectName, actual, estimated) {
+            const chartContainer = document.querySelector('.chart-container');
+            const chartMessage = document.getElementById('chartMessage');
+            const statsContainer = document.getElementById('statsContainer');
+
+            chartMessage.style.display = 'none';
+            chartContainer.style.display = 'block';
+            statsContainer.style.display = 'grid';
+
+            const remaining = Math.max(0, estimated - actual);
+            const progress = estimated > 0 ? Math.min(100, (actual / estimated) * 100) : 0;
+
+            document.getElementById('estimatedHours').textContent = estimated.toFixed(1);
+            document.getElementById('actualHours').textContent = actual.toFixed(1);
+            document.getElementById('remainingHours').textContent = remaining.toFixed(1);
+
+            const progressEl = document.getElementById('progressPercent');
+            progressEl.textContent = progress.toFixed(0) + '%';
+            progressEl.className = 'stat-value';
+            if (progress >= 100) {
+                progressEl.classList.add('danger');
+            } else if (progress >= 80) {
+                progressEl.classList.add('warning');
+            } else {
+                progressEl.classList.add('success');
+            }
+
+            const ctx = document.getElementById('hoursChart').getContext('2d');
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Hours'],
+                    datasets: [
+                        {
+                            label: 'Estimated Hours',
+                            data: [estimated],
+                            backgroundColor: 'rgba(88, 166, 255, 0.7)',
+                            borderColor: 'rgba(88, 166, 255, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            barPercentage: 0.6
+                        },
+                        {
+                            label: 'Actual Hours',
+                            data: [actual],
+                            backgroundColor: actual > estimated 
+                                ? 'rgba(248, 81, 73, 0.7)' 
+                                : 'rgba(63, 185, 80, 0.7)',
+                            borderColor: actual > estimated 
+                                ? 'rgba(248, 81, 73, 1)' 
+                                : 'rgba(63, 185, 80, 1)',
+                            borderWidth: 2,
+                            borderRadius: 8,
+                            barPercentage: 0.6
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#8b949e',
+                                font: {
+                                    family: "'DM Sans', sans-serif",
+                                    size: 13
+                                },
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'rectRounded'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: projectName,
+                            color: '#e6edf3',
+                            font: {
+                                family: "'DM Sans', sans-serif",
+                                size: 18,
+                                weight: '600'
+                            },
+                            padding: {
+                                bottom: 30
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#21262d',
+                            titleColor: '#e6edf3',
+                            bodyColor: '#8b949e',
+                            borderColor: '#30363d',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            padding: 12,
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.dataset.label}: ${context.raw.toFixed(1)} hours`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(48, 54, 61, 0.5)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#8b949e',
+                                font: {
+                                    family: "'Space Mono', monospace"
+                                },
+                                callback: function(value) {
+                                    return value + 'h';
+                                }
+                            }
+                        },
+                        y: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function hideChart() {
+            const chartContainer = document.querySelector('.chart-container');
+            const chartMessage = document.getElementById('chartMessage');
+            const statsContainer = document.getElementById('statsContainer');
+
+            chartMessage.style.display = 'flex';
+            chartContainer.style.display = 'none';
+            statsContainer.style.display = 'none';
+
+            if (chart) {
+                chart.destroy();
+                chart = null;
+            }
+        }
+
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        async function saveSettings() {
+            saveGoogleSheetUrl();
+            closeSettings();
+            await fetchGoogleSheetEstimates();
+            showToast('success', 'Settings saved');
+        }
+
+        document.getElementById('settingsModal').addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeSettings();
+            }
+        });
+    </script>
+</body>
+</html>
