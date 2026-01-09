@@ -13,7 +13,8 @@ exports.handler = async (event, context) => {
     };
   }
 
-  const authUrl = `https://auth.freshbooks.com/oauth/authorize/?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}`;
+  const scopes = 'user:profile:read user:projects:read user:time_entries:read';
+  const authUrl = `https://auth.freshbooks.com/oauth/authorize/?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}`;
 
   return {
     statusCode: 302,
