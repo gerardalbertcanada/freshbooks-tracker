@@ -6,5 +6,5 @@ module.exports = {
   
   // Your Netlify site URL (no trailing slash)
   // Example: https://amazing-app-123.netlify.app
-  SITE_URL: 'https://YOUR-SITE-NAME.netlify.app'
+  SITE_URL: 'https://verdant-cobbler-7d37e8.netlify.app/'
 };
