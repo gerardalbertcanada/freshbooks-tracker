@@ -10,7 +10,6 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Get the API path from query string
   const apiPath = event.queryStringParameters?.path;
   
   if (!apiPath) {
@@ -21,18 +20,6 @@ exports.handler = async (event, context) => {
     };
   }
 
-  // Validate the path starts with allowed endpoints
-  const allowedPrefixes = ['/auth/api/v1/', '/projects/business/', '/accounting/account/'];
-  const isAllowed = allowedPrefixes.some(prefix => apiPath.startsWith(prefix));
-  
-  if (!isAllowed) {
-    return {
-      statusCode: 403,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'API path not allowed' })
-    };
-  }
-
   try {
     const url = `https://api.freshbooks.com${apiPath}`;
     
@@ -40,14 +27,14 @@ exports.handler = async (event, context) => {
       method: event.httpMethod,
       headers: {
         'Authorization': authHeader,
-        'Content-Type': 'application/json',
-        'Api-Version': 'alpha'
+        'Content-Type': 'application/json'
       },
       body: event.httpMethod !== 'GET' ? event.body : undefined
     });
 
     const data = await response.text();
     
+    // Return the actual status and response from FreshBooks
     return {
       statusCode: response.status,
       headers: {
@@ -61,7 +48,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'Failed to fetch from FreshBooks API' })
+      body: JSON.stringify({ error: err.message })
     };
   }
 };
