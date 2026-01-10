@@ -876,9 +876,11 @@
                 const identityData = await apiFetch('/auth/api/v1/users/me');
                 user = identityData.response;
                 
-                // Find the first business account
                 if (user.business_memberships && user.business_memberships.length > 0) {
-                    accountId = user.business_memberships[0].business.id;
+                // Find business with a name (skip empty ones)
+                    const business = user.business_memberships.find(b => b.business.name) 
+                     || user.business_memberships[0];
+                    accountId = business.business.id;
                 }
 
                 updateUserInfo();
