@@ -1039,11 +1039,12 @@
                 let serviceName = serviceId === 'unassigned' ? 'Unassigned' : (servicesMap[serviceId] || `Service ${serviceId}`);
                 let cleanName = serviceName.replace(': Non-Billable', '').replace(': Billable', '');
                 
-                // Find matching estimated hours
+                
+                // Find matching estimated hours - exact match
                 let estimatedHrs = 0;
-                const serviceName = servicesMap[serviceId] || '';
-                if (projectEstimates[serviceName]) {
-                    estimatedHrs = projectEstimates[serviceName];
+                const fullServiceName = servicesMap[serviceId] || '';
+                if (projectEstimates[fullServiceName]) {
+                    estimatedHrs = projectEstimates[fullServiceName];
                 } else if (projectEstimates[cleanName]) {
                     estimatedHrs = projectEstimates[cleanName];
                 } 
