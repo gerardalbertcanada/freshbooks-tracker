@@ -1041,13 +1041,12 @@
                 
                 // Find matching estimated hours
                 let estimatedHrs = 0;
-                for (const [estServiceName, estHours] of Object.entries(projectEstimates)) {
-                    if (cleanName.toLowerCase().includes(estServiceName.toLowerCase()) ||
-                        estServiceName.toLowerCase().includes(cleanName.split(':')[0].toLowerCase())) {
-                        estimatedHrs = estHours;
-                        break;
-                    }
-                }
+                const serviceName = servicesMap[serviceId] || '';
+                if (projectEstimates[serviceName]) {
+                    estimatedHrs = projectEstimates[serviceName];
+                } else if (projectEstimates[cleanName]) {
+                    estimatedHrs = projectEstimates[cleanName];
+                } 
                 
                 serviceData.push({
                     name: cleanName,
