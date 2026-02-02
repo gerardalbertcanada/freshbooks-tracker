@@ -741,7 +741,7 @@
             <div class="form-group">
                 <label>Client Hours Sheet URL</label>
                 <input type="text" id="clientSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
-                <small>Format: FreshBooks Client ID, Monthly Hours</small>
+                <small>Format: Client ID, Client Name, Monthly Hours</small>
             </div>
 
             <div class="modal-actions">
@@ -956,7 +956,6 @@
                         <p>Fetching client data</p>
                     `;
                     try {
-                        await fetchClients();
                         await fetchClientEstimates();
                         populateClientDropdown();
                         clientsLoaded = true;
@@ -1070,37 +1069,6 @@
             } catch (err) { console.error('Failed to fetch staff:', err); }
         }
 
-        async function fetchClients() {
-            if (!businessId) return;
-            try {
-                // Get clients from projects (we already have access)
-                const clientMap = {};
-                
-                // Check first 20 projects for client info
-                const projectsToCheck = projects.slice(0, 20);
-                const projectPromises = projectsToCheck.map(project => 
-                    apiFetch(`/projects/business/${businessId}/project/${project.id}`).catch(() => null)
-                );
-                const projectResults = await Promise.all(projectPromises);
-                
-                projectResults.forEach(data => {
-                    if (data && data.project && data.project.client_id) {
-                        const p = data.project;
-                        if (!clientMap[p.client_id]) {
-                            clientMap[p.client_id] = {
-                                id: p.client_id,
-                                name: p.group?.client_name || `Client ${p.client_id}`
-                            };
-                        }
-                    }
-                });
-                
-                clients = Object.values(clientMap);
-                clients.sort((a, b) => a.name.localeCompare(b.name));
-                console.log('Clients loaded:', clients.length);
-            } catch (err) { console.error('Failed to fetch clients:', err); }
-        }
-
         async function fetchClientEstimates() {
             const url = localStorage.getItem('clientSheetUrl');
             if (!url) return;
@@ -1114,18 +1082,23 @@
                 const csvText = await response.text();
                 const lines = csvText.split('\n');
                 clientEstimates = {};
+                clients = [];
+                
                 for (let i = 1; i < lines.length; i++) {
                     const line = lines[i].trim();
                     if (!line) continue;
                     const parts = parseCSVLine(line);
-                    if (parts.length >= 2) {
+                    if (parts.length >= 3) {
                         const clientId = parts[0].trim();
-                        const hours = parseFloat(parts[1].trim());
-                        if (clientId && !isNaN(hours)) {
+                        const clientName = parts[1].trim();
+                        const hours = parseFloat(parts[2].trim());
+                        if (clientId && clientName && !isNaN(hours)) {
                             clientEstimates[clientId] = hours;
+                            clients.push({ id: clientId, name: clientName });
                         }
                     }
                 }
+                clients.sort((a, b) => a.name.localeCompare(b.name));
                 console.log('Client estimates loaded:', Object.keys(clientEstimates).length);
             } catch (err) { console.error('Failed to fetch client estimates:', err); }
         }
@@ -1266,20 +1239,13 @@
         function populateClientDropdown() {
             const select = document.getElementById('clientSelect');
             select.innerHTML = '<option value="">-- Select client --</option>';
-            // Only show clients that have estimates in the spreadsheet
-            const estimateIds = Object.keys(clientEstimates);
-            console.log('Client estimates IDs:', estimateIds);
-            console.log('All clients:', clients.map(c => c.id));
-            
             clients.forEach(client => {
-                // Compare as strings since CSV values are strings
-                if (clientEstimates[String(client.id)]) {
-                    const option = document.createElement('option');
-                    option.value = client.id;
-                    option.textContent = client.name;
-                    select.appendChild(option);
-                }
+                const option = document.createElement('option');
+                option.value = client.id;
+                option.textContent = client.name;
+                select.appendChild(option);
             });
+            console.log('Client dropdown populated:', clients.length);
         }
 
         // Project Hours Functions
