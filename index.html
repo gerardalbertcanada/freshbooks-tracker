@@ -1250,11 +1250,14 @@
         function populateClientDropdown() {
             const select = document.getElementById('clientSelect');
             select.innerHTML = '<option value="">-- Select client --</option>';
+            // Only show clients that have estimates in the spreadsheet
             clients.forEach(client => {
-                const option = document.createElement('option');
-                option.value = client.id;
-                option.textContent = client.name;
-                select.appendChild(option);
+                if (clientEstimates[client.id]) {
+                    const option = document.createElement('option');
+                    option.value = client.id;
+                    option.textContent = client.name;
+                    select.appendChild(option);
+                }
             });
         }
 
