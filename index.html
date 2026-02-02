@@ -1073,7 +1073,15 @@
         async function fetchClients() {
             if (!businessId) return;
             try {
-                const data = await apiFetch(`/accounting/account/${businessId}/users/clients?per_page=100`);
+                // Get account ID from user's business memberships
+                const accountId = user.business_memberships.find(b => b.business.id == businessId)?.business.account_id;
+                if (!accountId) {
+                    console.error('No account ID found');
+                    return;
+                }
+                console.log('Account ID:', accountId);
+                
+                const data = await apiFetch(`/accounting/account/${accountId}/users/clients?per_page=100`);
                 if (data.response && data.response.result && data.response.result.clients) {
                     clients = data.response.result.clients.map(c => ({
                         id: c.id,
