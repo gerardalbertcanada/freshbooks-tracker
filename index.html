@@ -1150,18 +1150,45 @@
                 const endDate = new Date(year, month, 0).toISOString().split('T')[0];
                 const startISO = `${startDate}T00:00:00Z`;
                 const endISO = `${endDate}T23:59:59Z`;
-                let allEntries = [];
-                let page = 1;
-                let hasMore = true;
-                while (hasMore) {
-                    const path = `/timetracking/business/${businessId}/time_entries?team=1&client_id=${clientId}&started_from=${startISO}&started_to=${endISO}&per_page=100&page=${page}`;
-                    const data = await apiFetch(path);
-                    if (data.time_entries && data.time_entries.length > 0) {
-                        allEntries = allEntries.concat(data.time_entries);
-                        hasMore = data.meta && page < data.meta.pages;
-                        page++;
-                    } else { hasMore = false; }
+                
+                // First, find projects for this client
+                const projectsToCheck = projects.slice(0, 50);
+                const projectPromises = projectsToCheck.map(project => 
+                    apiFetch(`/projects/business/${businessId}/project/${project.id}`).catch(() => null)
+                );
+                const projectResults = await Promise.all(projectPromises);
+                
+                const clientProjectIds = [];
+                projectResults.forEach(data => {
+                    if (data && data.project && String(data.project.client_id) === String(clientId)) {
+                        clientProjectIds.push(data.project.id);
+                    }
+                });
+                
+                console.log('Projects for client', clientId, ':', clientProjectIds);
+                
+                if (clientProjectIds.length === 0) {
+                    console.log('No projects found for client');
+                    return [];
                 }
+                
+                // Fetch time entries for each project
+                let allEntries = [];
+                for (const projectId of clientProjectIds) {
+                    let page = 1;
+                    let hasMore = true;
+                    while (hasMore) {
+                        const path = `/timetracking/business/${businessId}/time_entries?team=1&project_id=${projectId}&started_from=${startISO}&started_to=${endISO}&per_page=100&page=${page}`;
+                        const data = await apiFetch(path);
+                        if (data.time_entries && data.time_entries.length > 0) {
+                            allEntries = allEntries.concat(data.time_entries);
+                            hasMore = data.meta && page < data.meta.pages;
+                            page++;
+                        } else { hasMore = false; }
+                    }
+                }
+                
+                console.log('Total time entries for client:', allEntries.length);
                 return allEntries;
             } catch (err) { console.error('Failed to fetch client time entries:', err); return []; }
         }
