@@ -1251,8 +1251,13 @@
             const select = document.getElementById('clientSelect');
             select.innerHTML = '<option value="">-- Select client --</option>';
             // Only show clients that have estimates in the spreadsheet
+            const estimateIds = Object.keys(clientEstimates);
+            console.log('Client estimates IDs:', estimateIds);
+            console.log('All clients:', clients.map(c => c.id));
+            
             clients.forEach(client => {
-                if (clientEstimates[client.id]) {
+                // Compare as strings since CSV values are strings
+                if (clientEstimates[String(client.id)]) {
                     const option = document.createElement('option');
                     option.value = client.id;
                     option.textContent = client.name;
@@ -1534,7 +1539,7 @@
             try {
                 const timeEntries = await fetchClientTimeEntries(clientId, year, month);
                 const clientName = clients.find(c => c.id == clientId)?.name || 'Client';
-                const estimated = clientEstimates[clientId] || 0;
+                const estimated = clientEstimates[String(clientId)] || 0;
                 displayClientData(clientName, timeEntries, estimated, year, month);
             } catch (err) {
                 console.error('Failed to load client hours:', err);
