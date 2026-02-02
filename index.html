@@ -741,7 +741,8 @@
             <div class="form-group">
                 <label>Client Hours Sheet URL</label>
                 <input type="text" id="clientSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
-                <small>Format: Client ID, Client Name, Monthly Hours</small>
+                <small>Format: Client Name, Monthly Hours, Project IDs<br>
+                Example: ABC Company, 40, "12345,67890"</small>
             </div>
 
             <div class="modal-actions">
@@ -1081,7 +1082,6 @@
                 if (!response.ok) throw new Error('Google Sheets error');
                 const csvText = await response.text();
                 const lines = csvText.split('\n');
-                clientEstimates = {};
                 clients = [];
                 
                 for (let i = 1; i < lines.length; i++) {
@@ -1089,17 +1089,21 @@
                     if (!line) continue;
                     const parts = parseCSVLine(line);
                     if (parts.length >= 3) {
-                        const clientId = parts[0].trim();
-                        const clientName = parts[1].trim();
-                        const hours = parseFloat(parts[2].trim());
-                        if (clientId && clientName && !isNaN(hours)) {
-                            clientEstimates[clientId] = hours;
-                            clients.push({ id: clientId, name: clientName });
+                        const clientName = parts[0].trim();
+                        const hours = parseFloat(parts[1].trim());
+                        const projectIds = parts[2].trim().split(',').map(id => id.trim()).filter(id => id);
+                        if (clientName && !isNaN(hours) && projectIds.length > 0) {
+                            clients.push({ 
+                                id: i, 
+                                name: clientName, 
+                                monthlyHours: hours,
+                                projectIds: projectIds
+                            });
                         }
                     }
                 }
                 clients.sort((a, b) => a.name.localeCompare(b.name));
-                console.log('Client estimates loaded:', Object.keys(clientEstimates).length);
+                console.log('Clients loaded from sheet:', clients.length);
             } catch (err) { console.error('Failed to fetch client estimates:', err); }
         }
 
@@ -1143,7 +1147,7 @@
             } catch (err) { console.error('Failed to fetch staff time entries:', err); return []; }
         }
 
-        async function fetchClientTimeEntries(clientId, year, month) {
+        async function fetchClientTimeEntries(clientProjectIds, year, month) {
             if (!businessId) return [];
             try {
                 const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
@@ -1151,24 +1155,9 @@
                 const startISO = `${startDate}T00:00:00Z`;
                 const endISO = `${endDate}T23:59:59Z`;
                 
-                // First, find projects for this client
-                const projectsToCheck = projects.slice(0, 50);
-                const projectPromises = projectsToCheck.map(project => 
-                    apiFetch(`/projects/business/${businessId}/project/${project.id}`).catch(() => null)
-                );
-                const projectResults = await Promise.all(projectPromises);
-                
-                const clientProjectIds = [];
-                projectResults.forEach(data => {
-                    if (data && data.project && String(data.project.client_id) === String(clientId)) {
-                        clientProjectIds.push(data.project.id);
-                    }
-                });
-                
-                console.log('Projects for client', clientId, ':', clientProjectIds);
+                console.log('Fetching time entries for projects:', clientProjectIds);
                 
                 if (clientProjectIds.length === 0) {
-                    console.log('No projects found for client');
                     return [];
                 }
                 
@@ -1535,6 +1524,8 @@
             if (!monthValue) { showToast('error', 'Please select a month'); return; }
 
             const [year, month] = monthValue.split('-').map(Number);
+            const client = clients.find(c => c.id == clientId);
+            if (!client) { showToast('error', 'Client not found'); return; }
 
             document.getElementById('clientChartMessage').style.display = 'none';
             document.getElementById('clientInlineLoading').classList.add('show');
@@ -1546,10 +1537,8 @@
             loadBtn.classList.add('loading');
 
             try {
-                const timeEntries = await fetchClientTimeEntries(clientId, year, month);
-                const clientName = clients.find(c => c.id == clientId)?.name || 'Client';
-                const estimated = clientEstimates[String(clientId)] || 0;
-                displayClientData(clientName, timeEntries, estimated, year, month);
+                const timeEntries = await fetchClientTimeEntries(client.projectIds, year, month);
+                displayClientData(client.name, timeEntries, client.monthlyHours, year, month);
             } catch (err) {
                 console.error('Failed to load client hours:', err);
                 showToast('error', 'Failed to load client hours');
