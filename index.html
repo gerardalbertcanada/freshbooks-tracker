@@ -1073,22 +1073,30 @@
         async function fetchClients() {
             if (!businessId) return;
             try {
-                // Get account ID from user's business memberships
-                const accountId = user.business_memberships.find(b => b.business.id == businessId)?.business.account_id;
-                if (!accountId) {
-                    console.error('No account ID found');
-                    return;
-                }
-                console.log('Account ID:', accountId);
+                // Get clients from projects (we already have access)
+                const clientMap = {};
                 
-                const data = await apiFetch(`/accounting/account/${accountId}/users/clients?per_page=100`);
-                if (data.response && data.response.result && data.response.result.clients) {
-                    clients = data.response.result.clients.map(c => ({
-                        id: c.id,
-                        name: c.organization || `${c.fname || ''} ${c.lname || ''}`.trim() || `Client ${c.id}`
-                    }));
-                    clients.sort((a, b) => a.name.localeCompare(b.name));
-                }
+                // Check first 20 projects for client info
+                const projectsToCheck = projects.slice(0, 20);
+                const projectPromises = projectsToCheck.map(project => 
+                    apiFetch(`/projects/business/${businessId}/project/${project.id}`).catch(() => null)
+                );
+                const projectResults = await Promise.all(projectPromises);
+                
+                projectResults.forEach(data => {
+                    if (data && data.project && data.project.client_id) {
+                        const p = data.project;
+                        if (!clientMap[p.client_id]) {
+                            clientMap[p.client_id] = {
+                                id: p.client_id,
+                                name: p.group?.client_name || `Client ${p.client_id}`
+                            };
+                        }
+                    }
+                });
+                
+                clients = Object.values(clientMap);
+                clients.sort((a, b) => a.name.localeCompare(b.name));
                 console.log('Clients loaded:', clients.length);
             } catch (err) { console.error('Failed to fetch clients:', err); }
         }
