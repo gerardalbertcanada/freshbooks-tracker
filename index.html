@@ -23,11 +23,7 @@
             --freshbooks-green-hover: #0d9148;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'DM Sans', sans-serif;
@@ -37,10 +33,7 @@
             padding: 2rem;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1400px; margin: 0 auto; }
 
         header {
             display: flex;
@@ -51,55 +44,33 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+        .logo { display: flex; align-items: center; gap: 0.75rem; }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             background: linear-gradient(135deg, var(--accent), #a371f7);
             border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 1.25rem;
         }
 
-        h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
+        h1 { font-size: 1.5rem; font-weight: 600; }
 
-        .header-actions {
-            display: flex;
-            gap: 0.75rem;
-            align-items: center;
-        }
+        .header-actions { display: flex; gap: 0.75rem; align-items: center; }
 
         .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
+            display: flex; align-items: center; gap: 0.75rem;
             padding: 0.5rem 1rem;
             background: var(--bg-tertiary);
-            border-radius: 8px;
-            font-size: 0.875rem;
+            border-radius: 8px; font-size: 0.875rem;
         }
 
         .user-info .avatar {
-            width: 28px;
-            height: 28px;
+            width: 28px; height: 28px;
             background: var(--accent);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 0.75rem;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 600; font-size: 0.75rem;
         }
 
         .settings-btn, .logout-btn {
@@ -112,9 +83,7 @@
             font-family: inherit;
             font-size: 0.875rem;
             transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            display: flex; align-items: center; gap: 0.5rem;
         }
 
         .settings-btn:hover, .logout-btn:hover {
@@ -123,98 +92,57 @@
             border-color: var(--accent);
         }
 
-        .logout-btn:hover {
-            border-color: var(--danger);
-            color: var(--danger);
-        }
+        .logout-btn:hover { border-color: var(--danger); color: var(--danger); }
 
         /* Navigation Tabs */
         .nav-tabs {
-            display: flex;
-            gap: 0.5rem;
+            display: flex; gap: 0.5rem;
             margin-bottom: 1.5rem;
             border-bottom: 1px solid var(--border);
-            padding-bottom: 0;
         }
 
         .nav-tab {
             padding: 0.75rem 1.5rem;
-            background: transparent;
-            border: none;
+            background: transparent; border: none;
             color: var(--text-secondary);
-            font-family: inherit;
-            font-size: 0.95rem;
-            font-weight: 500;
+            font-family: inherit; font-size: 0.95rem; font-weight: 500;
             cursor: pointer;
             border-bottom: 2px solid transparent;
             margin-bottom: -1px;
             transition: all 0.2s;
         }
 
-        .nav-tab:hover {
-            color: var(--text-primary);
-        }
+        .nav-tab:hover { color: var(--text-primary); }
+        .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-        .nav-tab.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
 
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
+        /* Login Screen */
         .login-screen {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 60vh;
-            text-align: center;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-height: 60vh; text-align: center;
         }
 
         .login-screen .logo-large {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             background: linear-gradient(135deg, var(--accent), #a371f7);
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 2.5rem;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 2.5rem;
             margin-bottom: 1.5rem;
         }
 
-        .login-screen h2 {
-            font-size: 1.75rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-screen p {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            max-width: 400px;
-        }
+        .login-screen h2 { font-size: 1.75rem; margin-bottom: 0.5rem; }
+        .login-screen p { color: var(--text-secondary); margin-bottom: 2rem; max-width: 400px; }
 
         .login-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: var(--freshbooks-green);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            background: var(--freshbooks-green); color: white; border: none;
+            padding: 1rem 2rem; border-radius: 10px;
+            font-family: inherit; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
         }
 
         .login-btn:hover {
@@ -223,462 +151,259 @@
             box-shadow: 0 4px 12px rgba(11, 122, 62, 0.3);
         }
 
-        .login-btn svg {
-            width: 24px;
-            height: 24px;
-        }
+        .login-btn svg { width: 24px; height: 24px; }
+        .login-note { margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-secondary); }
 
-        .login-note {
-            margin-top: 1.5rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-        }
-
+        /* Modal */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 1000; opacity: 0; visibility: hidden;
             transition: all 0.3s;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
 
         .modal {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 500px;
-            transform: translateY(20px);
-            transition: transform 0.3s;
+            border-radius: 16px; padding: 2rem;
+            width: 90%; max-width: 500px;
+            transform: translateY(20px); transition: transform 0.3s;
         }
 
-        .modal-overlay.active .modal {
-            transform: translateY(0);
-        }
+        .modal-overlay.active .modal { transform: translateY(0); }
 
         .modal h2 {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.25rem; margin-bottom: 1.5rem;
+            display: flex; align-items: center; gap: 0.5rem;
         }
 
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
+        .form-group { margin-bottom: 1.25rem; }
         .form-group label {
-            display: block;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
+            display: block; font-size: 0.875rem;
+            color: var(--text-secondary); margin-bottom: 0.5rem;
         }
 
         .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.75rem 1rem;
+            width: 100%; padding: 0.75rem 1rem;
             background: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.875rem;
+            border-radius: 8px; color: var(--text-primary);
+            font-family: inherit; font-size: 0.875rem;
             transition: border-color 0.2s;
         }
 
         .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--accent);
+            outline: none; border-color: var(--accent);
         }
 
         .form-group small {
-            display: block;
-            margin-top: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.75rem;
+            display: block; margin-top: 0.5rem;
+            color: var(--text-secondary); font-size: 0.75rem;
         }
 
-        .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
+        .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
 
         .btn {
-            flex: 1;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 0.875rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
+            flex: 1; padding: 0.75rem 1.5rem;
+            border-radius: 8px; font-family: inherit;
+            font-size: 0.875rem; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
         }
 
-        .btn-primary {
-            background: var(--accent);
-            border: none;
-            color: var(--bg-primary);
-        }
+        .btn-primary { background: var(--accent); border: none; color: var(--bg-primary); }
+        .btn-primary:hover { background: var(--accent-hover); }
+        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
+        .btn-secondary:hover { border-color: var(--text-secondary); color: var(--text-primary); }
 
-        .btn-primary:hover {
-            background: var(--accent-hover);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-secondary);
-            color: var(--text-primary);
-        }
-
-        .dashboard {
-            display: grid;
-            gap: 1.5rem;
-        }
+        /* Dashboard */
+        .dashboard { display: grid; gap: 1.5rem; }
 
         .card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 16px; padding: 1.5rem;
         }
 
         .card-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1.5rem;
+            display: flex; align-items: center;
+            justify-content: space-between; margin-bottom: 1.5rem;
         }
 
-        .card-title {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
+        .card-title { font-size: 1rem; font-weight: 600; color: var(--text-secondary); }
 
         .filter-row {
-            display: flex;
-            gap: 1rem;
-            align-items: flex-end;
-            flex-wrap: wrap;
+            display: flex; gap: 1rem;
+            align-items: flex-end; flex-wrap: wrap;
         }
 
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
+        .filter-group { display: flex; flex-direction: column; gap: 0.5rem; }
 
         .filter-group label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 0.75rem; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.05em;
         }
 
         .filter-group select, .filter-group input {
             padding: 0.75rem 1rem;
             background: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.9rem;
-            cursor: pointer;
-            min-width: 180px;
+            border-radius: 8px; color: var(--text-primary);
+            font-family: inherit; font-size: 0.9rem;
+            cursor: pointer; min-width: 180px;
         }
 
         .filter-group select:focus, .filter-group input:focus {
-            outline: none;
-            border-color: var(--accent);
+            outline: none; border-color: var(--accent);
         }
 
-        .date-inputs {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .date-inputs span {
-            color: var(--text-secondary);
-        }
-
-        .project-selector {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
+        .project-selector { display: flex; gap: 1rem; align-items: center; }
 
         .project-selector select {
-            flex: 1;
-            padding: 0.75rem 1rem;
+            flex: 1; padding: 0.75rem 1rem;
             background: var(--bg-primary);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 1rem;
-            cursor: pointer;
-            min-width: 300px;
+            border-radius: 8px; color: var(--text-primary);
+            font-family: inherit; font-size: 1rem;
+            cursor: pointer; min-width: 300px;
         }
 
-        .project-selector select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
+        .project-selector select:focus { outline: none; border-color: var(--accent); }
 
         .refresh-btn, .load-btn {
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             color: var(--text-secondary);
-            height: 44px;
-            padding: 0 1rem;
-            border-radius: 8px;
-            cursor: pointer;
+            height: 44px; padding: 0 1rem;
+            border-radius: 8px; cursor: pointer;
             transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-family: inherit;
-            font-size: 0.875rem;
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.5rem; font-family: inherit; font-size: 0.875rem;
         }
 
-        .refresh-btn {
-            width: 44px;
-            padding: 0;
-        }
+        .refresh-btn { width: 44px; padding: 0; }
 
         .refresh-btn:hover, .load-btn:hover {
-            background: var(--accent);
-            color: var(--bg-primary);
-            border-color: var(--accent);
+            background: var(--accent); color: var(--bg-primary); border-color: var(--accent);
         }
 
         .refresh-btn.loading svg, .load-btn.loading svg {
             animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .chart-container {
-            position: relative;
-            height: 500px;
-            margin-top: 1rem;
-        }
+        .chart-container { position: relative; height: 500px; margin-top: 1rem; }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 1rem; margin-bottom: 1.5rem;
         }
 
-        .stat-card {
-            background: var(--bg-tertiary);
-            border-radius: 12px;
-            padding: 1.25rem;
-        }
+        .stat-card { background: var(--bg-tertiary); border-radius: 12px; padding: 1.25rem; }
 
         .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+            font-size: 0.75rem; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.05em;
             margin-bottom: 0.5rem;
         }
 
-        .stat-value {
-            font-family: 'Space Mono', monospace;
-            font-size: 1.75rem;
-            font-weight: 700;
-        }
-
+        .stat-value { font-family: 'Space Mono', monospace; font-size: 1.75rem; font-weight: 700; }
         .stat-value.success { color: var(--success); }
         .stat-value.warning { color: var(--warning); }
         .stat-value.danger { color: var(--danger); }
 
-        .service-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
+        .service-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
 
-        .service-table th,
-        .service-table td {
-            padding: 0.75rem 1rem;
-            text-align: left;
+        .service-table th, .service-table td {
+            padding: 0.75rem 1rem; text-align: left;
             border-bottom: 1px solid var(--border);
         }
 
         .service-table th {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 600;
+            font-size: 0.75rem; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;
         }
 
-        .service-table td {
-            font-family: 'Space Mono', monospace;
-            font-size: 0.875rem;
-        }
-
-        .service-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .service-table .service-name {
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .service-table .over-budget {
-            color: var(--danger);
-        }
-
-        .service-table .on-track {
-            color: var(--success);
-        }
-
-        .service-table .warning {
-            color: var(--warning);
-        }
+        .service-table td { font-family: 'Space Mono', monospace; font-size: 0.875rem; }
+        .service-table tr:last-child td { border-bottom: none; }
+        .service-table .service-name { font-family: 'DM Sans', sans-serif; }
+        .service-table .over-budget { color: var(--danger); }
+        .service-table .on-track { color: var(--success); }
+        .service-table .warning { color: var(--warning); }
 
         .empty-state {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: var(--text-secondary);
+            text-align: center; padding: 4rem 2rem; color: var(--text-secondary);
         }
 
-        .empty-state svg {
-            width: 64px;
-            height: 64px;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .empty-state h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
+        .empty-state svg { width: 64px; height: 64px; margin-bottom: 1rem; opacity: 0.5; }
+        .empty-state h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: var(--text-primary); }
 
         footer {
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+            margin-top: 2rem; padding-top: 1.5rem;
             border-top: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
+            text-align: center; color: var(--text-secondary); font-size: 0.875rem;
         }
 
         .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: var(--bg-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
             z-index: 2000;
         }
 
-        .loading-overlay.hidden {
-            display: none;
-        }
+        .loading-overlay.hidden { display: none; }
 
         .spinner {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border: 3px solid var(--border);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
 
-        .loading-overlay p {
-            margin-top: 1rem;
-            color: var(--text-secondary);
-        }
+        .loading-overlay p { margin-top: 1rem; color: var(--text-secondary); }
 
         .toast {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            font-size: 0.875rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            transform: translateY(100px);
-            opacity: 0;
-            transition: all 0.3s;
-            z-index: 3000;
+            position: fixed; bottom: 2rem; right: 2rem;
+            padding: 1rem 1.5rem; border-radius: 10px; font-size: 0.875rem;
+            display: flex; align-items: center; gap: 0.75rem;
+            transform: translateY(100px); opacity: 0;
+            transition: all 0.3s; z-index: 3000;
         }
 
-        .toast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .toast.error {
-            background: var(--danger);
-            color: white;
-        }
-
-        .toast.success {
-            background: var(--success);
-            color: white;
-        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.error { background: var(--danger); color: white; }
+        .toast.success { background: var(--success); color: white; }
 
         .inline-loading {
-            display: none;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            padding: 1rem;
+            display: none; align-items: center; gap: 0.5rem;
+            color: var(--text-secondary); font-size: 0.875rem; padding: 1rem;
         }
 
-        .inline-loading.show {
-            display: flex;
-        }
+        .inline-loading.show { display: flex; }
 
         .inline-loading .spinner-small {
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 2px solid var(--border);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block; padding: 0.25rem 0.75rem;
+            border-radius: 20px; font-size: 0.75rem; font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-badge.on-track { background: rgba(63, 185, 80, 0.2); color: var(--success); }
+        .status-badge.warning { background: rgba(210, 153, 34, 0.2); color: var(--warning); }
+        .status-badge.over { background: rgba(248, 81, 73, 0.2); color: var(--danger); }
     </style>
 </head>
 <body>
@@ -693,7 +418,7 @@
         <div id="loginScreen" class="login-screen" style="display: none;">
             <div class="logo-large">⏱</div>
             <h2>Project Hours Tracker</h2>
-            <p>Connect your FreshBooks account to compare estimated vs actual project hours by service.</p>
+            <p>Connect your FreshBooks account to compare estimated vs actual project hours.</p>
             <button class="login-btn" onclick="loginWithFreshBooks()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
@@ -738,6 +463,7 @@
             <div class="nav-tabs">
                 <button class="nav-tab active" onclick="switchTab('projects')">Project Hours</button>
                 <button class="nav-tab" onclick="switchTab('staff')">Staff Hours</button>
+                <button class="nav-tab" onclick="switchTab('clients')">Client Hours</button>
             </div>
 
             <!-- Project Hours Tab -->
@@ -781,7 +507,7 @@
                                 <path d="M18 17V9M13 17V5M8 17v-3"></path>
                             </svg>
                             <h3>No Project Selected</h3>
-                            <p>Select a project from the dropdown to view hours comparison by service</p>
+                            <p>Select a project from the dropdown to view hours comparison</p>
                         </div>
                         <div class="chart-container" style="display: none;">
                             <canvas id="hoursChart"></canvas>
@@ -802,8 +528,7 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
-                            <tbody id="serviceTableBody">
-                            </tbody>
+                            <tbody id="serviceTableBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -833,9 +558,9 @@
                             </div>
                             <div class="filter-group" id="customDateGroup" style="display: none;">
                                 <label>Custom Dates</label>
-                                <div class="date-inputs">
+                                <div style="display:flex;gap:0.5rem;align-items:center;">
                                     <input type="date" id="startDate">
-                                    <span>to</span>
+                                    <span style="color:var(--text-secondary)">to</span>
                                     <input type="date" id="endDate">
                                 </div>
                             </div>
@@ -897,8 +622,94 @@
                                     <th>Percentage</th>
                                 </tr>
                             </thead>
-                            <tbody id="staffServiceTableBody">
-                            </tbody>
+                            <tbody id="staffServiceTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Hours Tab -->
+            <div id="clientsTab" class="tab-content">
+                <div class="dashboard">
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Filter Client Hours</span>
+                        </div>
+                        <div class="filter-row">
+                            <div class="filter-group">
+                                <label>Client</label>
+                                <select id="clientSelect">
+                                    <option value="">-- Select client --</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>Month</label>
+                                <input type="month" id="clientMonth">
+                            </div>
+                            <button class="load-btn" onclick="loadClientHours()">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"></path>
+                                    <path d="M18 17V9M13 17V5M8 17v-3"></path>
+                                </svg>
+                                Load Hours
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="clientStatsContainer" class="stats-grid" style="display: none;">
+                        <div class="stat-card">
+                            <div class="stat-label">Monthly Estimate</div>
+                            <div id="clientEstimatedHours" class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Actual Hours</div>
+                            <div id="clientActualHours" class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Remaining</div>
+                            <div id="clientRemainingHours" class="stat-value">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Status</div>
+                            <div id="clientStatus" class="stat-value">-</div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <span class="card-title">Monthly Hours</span>
+                        </div>
+                        <div id="clientChartMessage" class="empty-state">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            <h3>Select a Client</h3>
+                            <p>Choose a client and month, then click "Load Hours"</p>
+                        </div>
+                        <div id="clientInlineLoading" class="inline-loading">
+                            <div class="spinner-small"></div>
+                            <span>Loading client hours...</span>
+                        </div>
+                        <div class="chart-container" id="clientChartContainer" style="display: none;">
+                            <canvas id="clientHoursChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="card" id="clientProjectsCard" style="display: none;">
+                        <div class="card-header">
+                            <span class="card-title">Hours by Project</span>
+                        </div>
+                        <table class="service-table">
+                            <thead>
+                                <tr>
+                                    <th>Project</th>
+                                    <th>Hours</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody id="clientProjectsTableBody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -910,6 +721,7 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
     <div id="settingsModal" class="modal-overlay">
         <div class="modal">
             <h2>
@@ -917,14 +729,19 @@
                     <circle cx="12" cy="12" r="3"></circle>
                     <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"></path>
                 </svg>
-                Google Sheets Configuration
+                Configuration
             </h2>
             
             <div class="form-group">
-                <label>Google Sheet URL</label>
+                <label>Project Hours Sheet URL</label>
                 <input type="text" id="googleSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
-                <small>Sheet format: Project Name, Service, Estimated Hours<br>
-                Example row: Website Redesign, Development, 40</small>
+                <small>Format: Project Name, Service, Estimated Hours</small>
+            </div>
+
+            <div class="form-group">
+                <label>Client Hours Sheet URL</label>
+                <input type="text" id="clientSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/...">
+                <small>Format: FreshBooks Client ID, Monthly Hours</small>
             </div>
 
             <div class="modal-actions">
@@ -935,16 +752,23 @@
     </div>
 
     <script>
+        // State
         let auth = { accessToken: null, refreshToken: null, expiresAt: null };
         let user = null;
         let businessId = null;
         let projects = [];
         let staffMembers = [];
+        let clients = [];
         let servicesMap = {};
         let estimatedHours = {};
+        let clientEstimates = {};
         let chart = null;
         let staffChart = null;
+        let clientChart = null;
+        let staffLoaded = false;
+        let clientsLoaded = false;
 
+        // Initialize
         document.addEventListener('DOMContentLoaded', async () => {
             if (window.location.hash) {
                 const params = new URLSearchParams(window.location.hash.substring(1));
@@ -969,7 +793,7 @@
             }
 
             loadAuth();
-            loadGoogleSheetUrl();
+            loadSettings();
             setDefaultDates();
 
             if (auth.accessToken) {
@@ -983,10 +807,9 @@
         function setDefaultDates() {
             const now = new Date();
             const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-            const today = new Date();
-            
             document.getElementById('startDate').value = firstOfMonth.toISOString().split('T')[0];
-            document.getElementById('endDate').value = today.toISOString().split('T')[0];
+            document.getElementById('endDate').value = now.toISOString().split('T')[0];
+            document.getElementById('clientMonth').value = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
         }
 
         function showLoading() { document.getElementById('loadingOverlay').classList.remove('hidden'); }
@@ -1011,21 +834,23 @@
             }
         }
 
-        function loadGoogleSheetUrl() {
+        function loadSettings() {
             const url = localStorage.getItem('googleSheetUrl');
             if (url) document.getElementById('googleSheetUrl').value = url;
+            const clientUrl = localStorage.getItem('clientSheetUrl');
+            if (clientUrl) document.getElementById('clientSheetUrl').value = clientUrl;
         }
 
-        function saveGoogleSheetUrl() {
-            const url = document.getElementById('googleSheetUrl').value.trim();
-            localStorage.setItem('googleSheetUrl', url);
+        function saveSheetUrls() {
+            localStorage.setItem('googleSheetUrl', document.getElementById('googleSheetUrl').value.trim());
+            localStorage.setItem('clientSheetUrl', document.getElementById('clientSheetUrl').value.trim());
         }
 
         function loginWithFreshBooks() { window.location.href = '/api/auth'; }
 
         function logout() {
             auth = { accessToken: null, refreshToken: null, expiresAt: null };
-            user = null; businessId = null; projects = []; staffMembers = [];
+            user = null; businessId = null; projects = []; staffMembers = []; clients = [];
             localStorage.removeItem('freshbooksAuth');
             showLoginScreen();
         }
@@ -1090,8 +915,6 @@
             }
         }
 
-        let staffLoaded = false;
-        
         // Tab switching
         async function switchTab(tab) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1100,14 +923,12 @@
             if (tab === 'projects') {
                 document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
                 document.getElementById('projectsTab').classList.add('active');
-            } else {
+            } else if (tab === 'staff') {
                 document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
                 document.getElementById('staffTab').classList.add('active');
-                
-                // Lazy load staff members on first visit
                 if (!staffLoaded) {
                     document.getElementById('staffChartMessage').innerHTML = `
-                        <div class="spinner-small" style="width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem;"></div>
+                        <div style="width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem;"></div>
                         <h3>Loading Staff...</h3>
                         <p>Fetching team member data</p>
                     `;
@@ -1115,9 +936,7 @@
                         await fetchStaffMembers();
                         populateStaffDropdown();
                         staffLoaded = true;
-                    } catch (err) {
-                        console.error('Staff load error:', err);
-                    }
+                    } catch (err) { console.error('Staff load error:', err); }
                     document.getElementById('staffChartMessage').innerHTML = `
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -1125,6 +944,31 @@
                         </svg>
                         <h3>Select a Staff Member</h3>
                         <p>Choose a staff member and date range, then click "Load Hours"</p>
+                    `;
+                }
+            } else if (tab === 'clients') {
+                document.querySelector('.nav-tab:nth-child(3)').classList.add('active');
+                document.getElementById('clientsTab').classList.add('active');
+                if (!clientsLoaded) {
+                    document.getElementById('clientChartMessage').innerHTML = `
+                        <div style="width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem;"></div>
+                        <h3>Loading Clients...</h3>
+                        <p>Fetching client data</p>
+                    `;
+                    try {
+                        await fetchClients();
+                        await fetchClientEstimates();
+                        populateClientDropdown();
+                        clientsLoaded = true;
+                    } catch (err) { console.error('Clients load error:', err); }
+                    document.getElementById('clientChartMessage').innerHTML = `
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        <h3>Select a Client</h3>
+                        <p>Choose a client and month, then click "Load Hours"</p>
                     `;
                 }
             }
@@ -1139,10 +983,8 @@
                 customGroup.style.display = 'block';
             } else {
                 customGroup.style.display = 'none';
-                
                 const now = new Date();
                 let startDate, endDate;
-                
                 if (select.value === 'this_month') {
                     startDate = new Date(now.getFullYear(), now.getMonth(), 1);
                     endDate = now;
@@ -1150,7 +992,6 @@
                     startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
                     endDate = new Date(now.getFullYear(), now.getMonth(), 0);
                 }
-                
                 document.getElementById('startDate').value = startDate.toISOString().split('T')[0];
                 document.getElementById('endDate').value = endDate.toISOString().split('T')[0];
             }
@@ -1165,7 +1006,6 @@
                     fetchServices(),
                     fetchGoogleSheetEstimates()
                 ]);
-                
                 populateProjectDropdown();
                 showToast('success', 'Data refreshed successfully');
             } catch (error) {
@@ -1179,17 +1019,9 @@
             try {
                 const data = await apiFetch(`/projects/business/${businessId}/projects?per_page=100`);
                 if (data.projects) {
-                    projects = data.projects.map(p => ({
-                        id: p.id,
-                        title: p.title,
-                        services: p.services || []
-                    }));
-                    
-                    // Store project name map globally
+                    projects = data.projects.map(p => ({ id: p.id, title: p.title, services: p.services || [] }));
                     window.projectNameMap = {};
-                    projects.forEach(p => {
-                        window.projectNameMap[p.id] = p.title;
-                    });
+                    projects.forEach(p => { window.projectNameMap[p.id] = p.title; });
                 }
             } catch (err) { console.error('Failed to fetch projects:', err); throw err; }
         }
@@ -1200,9 +1032,7 @@
                 const data = await apiFetch(`/comments/business/${businessId}/services`);
                 if (data.services) {
                     servicesMap = {};
-                    data.services.forEach(s => {
-                        servicesMap[s.id] = s.name;
-                    });
+                    data.services.forEach(s => { servicesMap[s.id] = s.name; });
                 }
             } catch (err) { console.error('Failed to fetch services:', err); }
         }
@@ -1211,8 +1041,6 @@
             if (!businessId) return;
             try {
                 const memberNames = {};
-                
-                // Get business members (employees) - fast
                 const businessData = await apiFetch(`/auth/api/v1/users/business/${businessId}`);
                 if (businessData.response && businessData.response.business_group && businessData.response.business_group.members) {
                     businessData.response.business_group.members.forEach(m => {
@@ -1220,14 +1048,11 @@
                         if (name) memberNames[m.identity_id] = name;
                     });
                 }
-
-                // Get names from first 10 projects in parallel (includes contractors)
                 const projectsToCheck = projects.slice(0, 10);
                 const projectPromises = projectsToCheck.map(project => 
                     apiFetch(`/projects/business/${businessId}/project/${project.id}`).catch(() => null)
                 );
                 const projectResults = await Promise.all(projectPromises);
-                
                 projectResults.forEach(projectData => {
                     if (projectData && projectData.project && projectData.project.group && projectData.project.group.members) {
                         projectData.project.group.members.forEach(m => {
@@ -1238,17 +1063,55 @@
                         });
                     }
                 });
-
-                // Build staff list directly from names found (skip heavy time entries call)
-                staffMembers = Object.entries(memberNames).map(([id, name]) => ({
-                    identity_id: parseInt(id),
-                    name: name
-                }));
+                staffMembers = Object.entries(memberNames).map(([id, name]) => ({ identity_id: parseInt(id), name: name }));
                 staffMembers.sort((a, b) => a.name.localeCompare(b.name));
-                
                 window.staffNameMap = memberNames;
                 console.log('Staff loaded:', staffMembers.length);
             } catch (err) { console.error('Failed to fetch staff:', err); }
+        }
+
+        async function fetchClients() {
+            if (!businessId) return;
+            try {
+                const data = await apiFetch(`/accounting/account/${businessId}/users/clients?per_page=100`);
+                if (data.response && data.response.result && data.response.result.clients) {
+                    clients = data.response.result.clients.map(c => ({
+                        id: c.id,
+                        name: c.organization || `${c.fname || ''} ${c.lname || ''}`.trim() || `Client ${c.id}`
+                    }));
+                    clients.sort((a, b) => a.name.localeCompare(b.name));
+                }
+                console.log('Clients loaded:', clients.length);
+            } catch (err) { console.error('Failed to fetch clients:', err); }
+        }
+
+        async function fetchClientEstimates() {
+            const url = localStorage.getItem('clientSheetUrl');
+            if (!url) return;
+            const match = url.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            if (!match) return;
+            const sheetId = match[1];
+            const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+            try {
+                const response = await fetch(csvUrl);
+                if (!response.ok) throw new Error('Google Sheets error');
+                const csvText = await response.text();
+                const lines = csvText.split('\n');
+                clientEstimates = {};
+                for (let i = 1; i < lines.length; i++) {
+                    const line = lines[i].trim();
+                    if (!line) continue;
+                    const parts = parseCSVLine(line);
+                    if (parts.length >= 2) {
+                        const clientId = parts[0].trim();
+                        const hours = parseFloat(parts[1].trim());
+                        if (clientId && !isNaN(hours)) {
+                            clientEstimates[clientId] = hours;
+                        }
+                    }
+                }
+                console.log('Client estimates loaded:', Object.keys(clientEstimates).length);
+            } catch (err) { console.error('Failed to fetch client estimates:', err); }
         }
 
         async function fetchProjectTimeEntries(projectId) {
@@ -1257,56 +1120,61 @@
                 let allEntries = [];
                 let page = 1;
                 let hasMore = true;
-                
                 while (hasMore) {
                     const path = `/timetracking/business/${businessId}/time_entries?team=1&project_id=${projectId}&per_page=100&page=${page}`;
                     const data = await apiFetch(path);
-                    
                     if (data.time_entries && data.time_entries.length > 0) {
                         allEntries = allEntries.concat(data.time_entries);
                         hasMore = data.meta && page < data.meta.pages;
                         page++;
-                    } else {
-                        hasMore = false;
-                    }
+                    } else { hasMore = false; }
                 }
-                
                 return allEntries;
-            } catch (err) { 
-                console.error('Failed to fetch time entries:', err); 
-                return [];
-            }
+            } catch (err) { console.error('Failed to fetch time entries:', err); return []; }
         }
 
         async function fetchStaffTimeEntries(identityId, startDate, endDate) {
             if (!businessId) return [];
             try {
-                // Format dates for API
                 const startISO = `${startDate}T00:00:00Z`;
                 const endISO = `${endDate}T23:59:59Z`;
-                
                 let allEntries = [];
                 let page = 1;
                 let hasMore = true;
-                
                 while (hasMore) {
                     const path = `/timetracking/business/${businessId}/time_entries?team=1&identity_id=${identityId}&started_from=${startISO}&started_to=${endISO}&per_page=100&page=${page}`;
                     const data = await apiFetch(path);
-                    
                     if (data.time_entries && data.time_entries.length > 0) {
                         allEntries = allEntries.concat(data.time_entries);
                         hasMore = data.meta && page < data.meta.pages;
                         page++;
-                    } else {
-                        hasMore = false;
-                    }
+                    } else { hasMore = false; }
                 }
-                
                 return allEntries;
-            } catch (err) { 
-                console.error('Failed to fetch staff time entries:', err); 
-                return [];
-            }
+            } catch (err) { console.error('Failed to fetch staff time entries:', err); return []; }
+        }
+
+        async function fetchClientTimeEntries(clientId, year, month) {
+            if (!businessId) return [];
+            try {
+                const startDate = `${year}-${String(month).padStart(2, '0')}-01`;
+                const endDate = new Date(year, month, 0).toISOString().split('T')[0];
+                const startISO = `${startDate}T00:00:00Z`;
+                const endISO = `${endDate}T23:59:59Z`;
+                let allEntries = [];
+                let page = 1;
+                let hasMore = true;
+                while (hasMore) {
+                    const path = `/timetracking/business/${businessId}/time_entries?team=1&client_id=${clientId}&started_from=${startISO}&started_to=${endISO}&per_page=100&page=${page}`;
+                    const data = await apiFetch(path);
+                    if (data.time_entries && data.time_entries.length > 0) {
+                        allEntries = allEntries.concat(data.time_entries);
+                        hasMore = data.meta && page < data.meta.pages;
+                        page++;
+                    } else { hasMore = false; }
+                }
+                return allEntries;
+            } catch (err) { console.error('Failed to fetch client time entries:', err); return []; }
         }
 
         async function fetchGoogleSheetEstimates() {
@@ -1379,25 +1247,32 @@
             });
         }
 
+        function populateClientDropdown() {
+            const select = document.getElementById('clientSelect');
+            select.innerHTML = '<option value="">-- Select client --</option>';
+            clients.forEach(client => {
+                const option = document.createElement('option');
+                option.value = client.id;
+                option.textContent = client.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Project Hours Functions
         async function onProjectChange() {
             const select = document.getElementById('projectSelect');
             const projectId = select.value;
-            if (!projectId) { hideChart(); return; }
-            
+            if (!projectId) { hideProjectChart(); return; }
             const project = projects.find(p => p.id == projectId);
             if (project) {
                 showLoading();
-                try {
-                    await displayProjectData(project);
-                } finally {
-                    hideLoading();
-                }
+                try { await displayProjectData(project); }
+                finally { hideLoading(); }
             }
         }
 
         async function displayProjectData(project) {
             const timeEntries = await fetchProjectTimeEntries(project.id);
-            
             const hoursPerService = {};
             timeEntries.forEach(te => {
                 const serviceId = te.service_id || 'unassigned';
@@ -1412,81 +1287,35 @@
             for (const [serviceId, actualHours] of Object.entries(hoursPerService)) {
                 let serviceName = serviceId === 'unassigned' ? 'Unassigned' : (servicesMap[serviceId] || `Service ${serviceId}`);
                 let cleanName = serviceName.replace(': Non-Billable', '').replace(': Billable', '');
-                
                 let estimatedHrs = 0;
                 const fullServiceName = servicesMap[serviceId] || '';
-                if (projectEstimates[fullServiceName]) {
-                    estimatedHrs = projectEstimates[fullServiceName];
-                } else if (projectEstimates[cleanName]) {
-                    estimatedHrs = projectEstimates[cleanName];
-                }
-                
-                serviceData.push({
-                    name: cleanName,
-                    actual: actualHours,
-                    estimated: estimatedHrs
-                });
+                if (projectEstimates[fullServiceName]) { estimatedHrs = projectEstimates[fullServiceName]; }
+                else if (projectEstimates[cleanName]) { estimatedHrs = projectEstimates[cleanName]; }
+                serviceData.push({ name: cleanName, actual: actualHours, estimated: estimatedHrs });
                 processedServices.add(cleanName.toLowerCase());
             }
             
             for (const [estServiceName, estHours] of Object.entries(projectEstimates)) {
                 const alreadyProcessed = Array.from(processedServices).some(name => 
-                    name.includes(estServiceName.toLowerCase()) || 
-                    estServiceName.toLowerCase().includes(name.split(':')[0])
+                    name.includes(estServiceName.toLowerCase()) || estServiceName.toLowerCase().includes(name.split(':')[0])
                 );
                 if (!alreadyProcessed) {
-                    serviceData.push({
-                        name: estServiceName,
-                        actual: 0,
-                        estimated: estHours
-                    });
+                    serviceData.push({ name: estServiceName, actual: 0, estimated: estHours });
                 }
             }
 
             serviceData.sort((a, b) => b.actual - a.actual);
             const filteredData = serviceData.filter(s => s.actual > 0 || s.estimated > 0);
-
-            if (filteredData.length === 0) {
-                updateChart(project.title, []);
-                updateServiceTable([]);
-            } else {
-                updateChart(project.title, filteredData);
-                updateServiceTable(filteredData);
-            }
-
+            updateProjectChart(project.title, filteredData);
+            updateProjectServiceTable(filteredData);
             const totalEstimated = filteredData.reduce((sum, s) => sum + s.estimated, 0);
             const totalActual = filteredData.reduce((sum, s) => sum + s.actual, 0);
-            updateStats(totalEstimated, totalActual);
-        }
-
-        function updateStats(estimated, actual) {
             document.getElementById('statsContainer').style.display = 'grid';
-            document.getElementById('estimatedHours').textContent = estimated.toFixed(1) + 'h';
-            document.getElementById('actualHours').textContent = actual.toFixed(1) + 'h';
+            document.getElementById('estimatedHours').textContent = totalEstimated.toFixed(1) + 'h';
+            document.getElementById('actualHours').textContent = totalActual.toFixed(1) + 'h';
         }
 
-        function updateServiceTable(serviceData) {
-            const tableCard = document.getElementById('tableCard');
-            const tbody = document.getElementById('serviceTableBody');
-            tableCard.style.display = 'block';
-            tbody.innerHTML = serviceData.map(service => {
-                const diff = service.estimated - service.actual;
-                const progress = service.estimated > 0 ? (service.actual / service.estimated) * 100 : 0;
-                let statusClass = 'on-track', statusText = 'On Track';
-                if (progress >= 100) { statusClass = 'over-budget'; statusText = 'Over Budget'; }
-                else if (progress >= 80) { statusClass = 'warning'; statusText = 'Warning'; }
-                else if (service.estimated === 0) { statusClass = ''; statusText = 'No Estimate'; }
-                return `<tr>
-                    <td class="service-name">${service.name}</td>
-                    <td>${service.estimated.toFixed(1)}h</td>
-                    <td>${service.actual.toFixed(1)}h</td>
-                    <td class="${diff < 0 ? 'over-budget' : ''}">${diff.toFixed(1)}h</td>
-                    <td class="${statusClass}">${statusText}</td>
-                </tr>`;
-            }).join('');
-        }
-
-        function updateChart(projectName, serviceData) {
+        function updateProjectChart(projectName, serviceData) {
             document.getElementById('chartMessage').style.display = 'none';
             document.querySelector('#projectsTab .chart-container').style.display = 'block';
             const ctx = document.getElementById('hoursChart').getContext('2d');
@@ -1508,9 +1337,7 @@
                     ]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
                     plugins: {
                         legend: { position: 'top', labels: { color: '#8b949e', font: { family: "'DM Sans', sans-serif", size: 13 }, padding: 20, usePointStyle: true, pointStyle: 'rectRounded' } },
                         title: { display: true, text: projectName, color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 18, weight: '600' }, padding: { bottom: 20 } },
@@ -1524,7 +1351,27 @@
             });
         }
 
-        function hideChart() {
+        function updateProjectServiceTable(serviceData) {
+            document.getElementById('tableCard').style.display = 'block';
+            const tbody = document.getElementById('serviceTableBody');
+            tbody.innerHTML = serviceData.map(service => {
+                const diff = service.estimated - service.actual;
+                const progress = service.estimated > 0 ? (service.actual / service.estimated) * 100 : 0;
+                let statusClass = 'on-track', statusText = 'On Track';
+                if (progress >= 100) { statusClass = 'over-budget'; statusText = 'Over Budget'; }
+                else if (progress >= 80) { statusClass = 'warning'; statusText = 'Warning'; }
+                else if (service.estimated === 0) { statusClass = ''; statusText = 'No Estimate'; }
+                return `<tr>
+                    <td class="service-name">${service.name}</td>
+                    <td>${service.estimated.toFixed(1)}h</td>
+                    <td>${service.actual.toFixed(1)}h</td>
+                    <td class="${diff < 0 ? 'over-budget' : ''}">${diff.toFixed(1)}h</td>
+                    <td class="${statusClass}">${statusText}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function hideProjectChart() {
             document.getElementById('chartMessage').style.display = 'flex';
             document.querySelector('#projectsTab .chart-container').style.display = 'none';
             document.getElementById('statsContainer').style.display = 'none';
@@ -1537,31 +1384,21 @@
             const staffId = document.getElementById('staffSelect').value;
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
-            
-            if (!staffId) {
-                showToast('error', 'Please select a staff member');
-                return;
-            }
-            
-            if (!startDate || !endDate) {
-                showToast('error', 'Please select a date range');
-                return;
-            }
+            if (!staffId) { showToast('error', 'Please select a staff member'); return; }
+            if (!startDate || !endDate) { showToast('error', 'Please select a date range'); return; }
 
-            // Show inline loading
             document.getElementById('staffChartMessage').style.display = 'none';
             document.getElementById('staffInlineLoading').classList.add('show');
             document.getElementById('staffChartContainer').style.display = 'none';
             document.getElementById('staffStatsContainer').style.display = 'none';
             document.getElementById('staffServiceCard').style.display = 'none';
             
-            const loadBtn = document.querySelector('.load-btn');
+            const loadBtn = document.querySelector('#staffTab .load-btn');
             loadBtn.classList.add('loading');
 
             try {
                 const timeEntries = await fetchStaffTimeEntries(staffId, startDate, endDate);
                 const staffName = staffMembers.find(s => s.identity_id == staffId)?.name || 'Staff';
-                
                 await displayStaffData(staffName, timeEntries, startDate, endDate);
             } catch (err) {
                 console.error('Failed to load staff hours:', err);
@@ -1576,75 +1413,52 @@
             if (timeEntries.length === 0) {
                 document.getElementById('staffChartMessage').style.display = 'flex';
                 document.getElementById('staffChartMessage').innerHTML = `
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M12 6v6l4 2"></path>
-                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
                     <h3>No Hours Found</h3>
                     <p>${staffName} has no time entries for the selected date range</p>
                 `;
                 return;
             }
 
-            // Calculate stats
             const totalSeconds = timeEntries.reduce((sum, te) => sum + te.duration, 0);
             const totalHours = totalSeconds / 3600;
-            
-            // Get unique days worked
             const daysWorked = new Set(timeEntries.map(te => te.started_at.split('T')[0])).size;
 
-            // Group by project for chart
             const hoursByProject = {};
             const missingProjectIds = [];
-            
             timeEntries.forEach(te => {
                 const projectId = te.project_id || 'no_project';
                 if (!hoursByProject[projectId]) hoursByProject[projectId] = 0;
                 hoursByProject[projectId] += te.duration / 3600;
-                
-                // Track missing project names
                 if (projectId !== 'no_project' && window.projectNameMap && !window.projectNameMap[projectId]) {
-                    if (!missingProjectIds.includes(projectId)) {
-                        missingProjectIds.push(projectId);
-                    }
+                    if (!missingProjectIds.includes(projectId)) missingProjectIds.push(projectId);
                 }
             });
 
-            // Fetch missing project names
             if (missingProjectIds.length > 0) {
                 const projectPromises = missingProjectIds.slice(0, 10).map(pid => 
                     apiFetch(`/projects/business/${businessId}/project/${pid}`).catch(() => null)
                 );
                 const projectResults = await Promise.all(projectPromises);
                 projectResults.forEach(data => {
-                    if (data && data.project) {
-                        window.projectNameMap[data.project.id] = data.project.title;
-                    }
+                    if (data && data.project) window.projectNameMap[data.project.id] = data.project.title;
                 });
             }
 
-            // Update stats
             document.getElementById('staffStatsContainer').style.display = 'grid';
             document.getElementById('staffTotalHours').textContent = totalHours.toFixed(1) + 'h';
             document.getElementById('staffProjectsCount').textContent = Object.keys(hoursByProject).length;
             document.getElementById('staffDaysWorked').textContent = daysWorked;
 
-            // Convert to array with project names and sort by hours
             const chartData = Object.entries(hoursByProject)
                 .map(([projectId, hours]) => {
                     const projectName = window.projectNameMap ? window.projectNameMap[projectId] : null;
-                    return {
-                        projectId: projectId,
-                        name: projectName || (projectId === 'no_project' ? 'No Project' : `Project ${projectId}`),
-                        hours: hours
-                    };
+                    return { projectId, name: projectName || (projectId === 'no_project' ? 'No Project' : `Project ${projectId}`), hours };
                 })
                 .sort((a, b) => b.hours - a.hours);
 
-            // Update chart
             updateStaffChart(staffName, chartData);
 
-            // Group by service for table
             const hoursByService = {};
             timeEntries.forEach(te => {
                 const serviceId = te.service_id || 'unassigned';
@@ -1653,11 +1467,7 @@
                 hoursByService[serviceName] += te.duration / 3600;
             });
 
-            // Convert to array and sort
-            const serviceData = Object.entries(hoursByService)
-                .map(([name, hours]) => ({ name, hours }))
-                .sort((a, b) => b.hours - a.hours);
-
+            const serviceData = Object.entries(hoursByService).map(([name, hours]) => ({ name, hours })).sort((a, b) => b.hours - a.hours);
             updateStaffServiceTable(serviceData, totalHours);
         }
 
@@ -1666,74 +1476,30 @@
             const ctx = document.getElementById('staffHoursChart').getContext('2d');
             if (staffChart) staffChart.destroy();
 
-            const labels = chartData.map(d => d.name);
-            const data = chartData.map(d => d.hours);
-
             staffChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Hours',
-                        data: data,
-                        backgroundColor: 'rgba(88, 166, 255, 0.7)',
-                        borderColor: 'rgba(88, 166, 255, 1)',
-                        borderWidth: 2,
-                        borderRadius: 6
-                    }]
+                    labels: chartData.map(d => d.name),
+                    datasets: [{ label: 'Hours', data: chartData.map(d => d.hours), backgroundColor: 'rgba(88, 166, 255, 0.7)', borderColor: 'rgba(88, 166, 255, 1)', borderWidth: 2, borderRadius: 6 }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    indexAxis: 'y',
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
                     plugins: {
                         legend: { display: false },
-                        title: { 
-                            display: true, 
-                            text: `${staffName} - Hours by Project`, 
-                            color: '#e6edf3', 
-                            font: { family: "'DM Sans', sans-serif", size: 18, weight: '600' }, 
-                            padding: { bottom: 20 } 
-                        },
-                        tooltip: { 
-                            backgroundColor: '#21262d', 
-                            titleColor: '#e6edf3', 
-                            bodyColor: '#8b949e', 
-                            borderColor: '#30363d', 
-                            borderWidth: 1, 
-                            cornerRadius: 8, 
-                            padding: 12,
-                            callbacks: {
-                                label: function(context) {
-                                    return `${context.raw.toFixed(1)} hours`;
-                                }
-                            }
-                        }
+                        title: { display: true, text: `${staffName} - Hours by Project`, color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 18, weight: '600' }, padding: { bottom: 20 } },
+                        tooltip: { backgroundColor: '#21262d', titleColor: '#e6edf3', bodyColor: '#8b949e', borderColor: '#30363d', borderWidth: 1, cornerRadius: 8, padding: 12, callbacks: { label: function(context) { return `${context.raw.toFixed(1)} hours`; } } }
                     },
                     scales: {
-                        x: { 
-                            beginAtZero: true,
-                            grid: { color: 'rgba(48, 54, 61, 0.5)', drawBorder: false }, 
-                            ticks: { 
-                                color: '#8b949e', 
-                                font: { family: "'Space Mono', monospace" },
-                                callback: function(value) { return value + 'h'; }
-                            } 
-                        },
-                        y: { 
-                            grid: { display: false }, 
-                            ticks: { color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 11 } } 
-                        }
+                        x: { beginAtZero: true, grid: { color: 'rgba(48, 54, 61, 0.5)', drawBorder: false }, ticks: { color: '#8b949e', font: { family: "'Space Mono', monospace" }, callback: function(value) { return value + 'h'; } } },
+                        y: { grid: { display: false }, ticks: { color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 11 } } }
                     }
                 }
             });
         }
 
         function updateStaffServiceTable(serviceData, totalHours) {
-            const card = document.getElementById('staffServiceCard');
+            document.getElementById('staffServiceCard').style.display = 'block';
             const tbody = document.getElementById('staffServiceTableBody');
-            card.style.display = 'block';
-            
             tbody.innerHTML = serviceData.map(service => {
                 const percentage = totalHours > 0 ? (service.hours / totalHours) * 100 : 0;
                 return `<tr>
@@ -1744,13 +1510,145 @@
             }).join('');
         }
 
+        // Client Hours Functions
+        async function loadClientHours() {
+            const clientId = document.getElementById('clientSelect').value;
+            const monthValue = document.getElementById('clientMonth').value;
+            if (!clientId) { showToast('error', 'Please select a client'); return; }
+            if (!monthValue) { showToast('error', 'Please select a month'); return; }
+
+            const [year, month] = monthValue.split('-').map(Number);
+
+            document.getElementById('clientChartMessage').style.display = 'none';
+            document.getElementById('clientInlineLoading').classList.add('show');
+            document.getElementById('clientChartContainer').style.display = 'none';
+            document.getElementById('clientStatsContainer').style.display = 'none';
+            document.getElementById('clientProjectsCard').style.display = 'none';
+            
+            const loadBtn = document.querySelector('#clientsTab .load-btn');
+            loadBtn.classList.add('loading');
+
+            try {
+                const timeEntries = await fetchClientTimeEntries(clientId, year, month);
+                const clientName = clients.find(c => c.id == clientId)?.name || 'Client';
+                const estimated = clientEstimates[clientId] || 0;
+                displayClientData(clientName, timeEntries, estimated, year, month);
+            } catch (err) {
+                console.error('Failed to load client hours:', err);
+                showToast('error', 'Failed to load client hours');
+            } finally {
+                document.getElementById('clientInlineLoading').classList.remove('show');
+                loadBtn.classList.remove('loading');
+            }
+        }
+
+        function displayClientData(clientName, timeEntries, estimated, year, month) {
+            const totalSeconds = timeEntries.reduce((sum, te) => sum + te.duration, 0);
+            const totalHours = totalSeconds / 3600;
+            const remaining = estimated - totalHours;
+            
+            // Determine status
+            let statusText, statusClass;
+            const progress = estimated > 0 ? (totalHours / estimated) * 100 : 0;
+            if (progress >= 100) { statusText = 'Over'; statusClass = 'danger'; }
+            else if (progress >= 80) { statusText = 'Warning'; statusClass = 'warning'; }
+            else { statusText = 'On Track'; statusClass = 'success'; }
+
+            document.getElementById('clientStatsContainer').style.display = 'grid';
+            document.getElementById('clientEstimatedHours').textContent = estimated.toFixed(1) + 'h';
+            document.getElementById('clientActualHours').textContent = totalHours.toFixed(1) + 'h';
+            
+            const remainingEl = document.getElementById('clientRemainingHours');
+            remainingEl.textContent = remaining.toFixed(1) + 'h';
+            remainingEl.className = 'stat-value';
+            if (remaining < 0) remainingEl.classList.add('danger');
+            else remainingEl.classList.add('success');
+
+            const statusEl = document.getElementById('clientStatus');
+            statusEl.textContent = statusText;
+            statusEl.className = 'stat-value ' + statusClass;
+
+            if (timeEntries.length === 0) {
+                document.getElementById('clientChartMessage').style.display = 'flex';
+                document.getElementById('clientChartMessage').innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 6v6l4 2"></path></svg>
+                    <h3>No Hours Found</h3>
+                    <p>${clientName} has no time entries for this month</p>
+                `;
+                return;
+            }
+
+            // Group by project
+            const hoursByProject = {};
+            timeEntries.forEach(te => {
+                const projectId = te.project_id || 'no_project';
+                if (!hoursByProject[projectId]) hoursByProject[projectId] = 0;
+                hoursByProject[projectId] += te.duration / 3600;
+            });
+
+            const chartData = Object.entries(hoursByProject)
+                .map(([projectId, hours]) => {
+                    const projectName = window.projectNameMap ? window.projectNameMap[projectId] : null;
+                    return { projectId, name: projectName || (projectId === 'no_project' ? 'No Project' : `Project ${projectId}`), hours };
+                })
+                .sort((a, b) => b.hours - a.hours);
+
+            updateClientChart(clientName, chartData, estimated, totalHours);
+            updateClientProjectsTable(chartData, totalHours);
+        }
+
+        function updateClientChart(clientName, chartData, estimated, actual) {
+            document.getElementById('clientChartContainer').style.display = 'block';
+            const ctx = document.getElementById('clientHoursChart').getContext('2d');
+            if (clientChart) clientChart.destroy();
+
+            // Horizontal bar showing estimated vs actual
+            clientChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Hours'],
+                    datasets: [
+                        { label: 'Estimated', data: [estimated], backgroundColor: 'rgba(88, 166, 255, 0.7)', borderColor: 'rgba(88, 166, 255, 1)', borderWidth: 2, borderRadius: 6, barPercentage: 0.6 },
+                        { label: 'Actual', data: [actual], backgroundColor: actual > estimated ? 'rgba(248, 81, 73, 0.7)' : 'rgba(63, 185, 80, 0.7)', borderColor: actual > estimated ? 'rgba(248, 81, 73, 1)' : 'rgba(63, 185, 80, 1)', borderWidth: 2, borderRadius: 6, barPercentage: 0.6 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    plugins: {
+                        legend: { position: 'top', labels: { color: '#8b949e', font: { family: "'DM Sans', sans-serif", size: 13 }, padding: 20, usePointStyle: true, pointStyle: 'rectRounded' } },
+                        title: { display: true, text: `${clientName} - Monthly Hours`, color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 18, weight: '600' }, padding: { bottom: 20 } },
+                        tooltip: { backgroundColor: '#21262d', titleColor: '#e6edf3', bodyColor: '#8b949e', borderColor: '#30363d', borderWidth: 1, cornerRadius: 8, padding: 12, callbacks: { label: function(context) { return `${context.dataset.label}: ${context.raw.toFixed(1)} hours`; } } }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, grid: { color: 'rgba(48, 54, 61, 0.5)', drawBorder: false }, ticks: { color: '#8b949e', font: { family: "'Space Mono', monospace" }, callback: function(value) { return value + 'h'; } } },
+                        y: { grid: { display: false }, ticks: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function updateClientProjectsTable(projectData, totalHours) {
+            document.getElementById('clientProjectsCard').style.display = 'block';
+            const tbody = document.getElementById('clientProjectsTableBody');
+            tbody.innerHTML = projectData.map(project => {
+                const percentage = totalHours > 0 ? (project.hours / totalHours) * 100 : 0;
+                return `<tr>
+                    <td class="service-name">${project.name}</td>
+                    <td>${project.hours.toFixed(1)}h</td>
+                    <td>${percentage.toFixed(1)}%</td>
+                </tr>`;
+            }).join('');
+        }
+
+        // Settings
         function openSettings() { document.getElementById('settingsModal').classList.add('active'); }
         function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
 
         async function saveSettings() {
-            saveGoogleSheetUrl();
+            saveSheetUrls();
             closeSettings();
             await fetchGoogleSheetEstimates();
+            await fetchClientEstimates();
             const select = document.getElementById('projectSelect');
             if (select.value) onProjectChange();
             showToast('success', 'Settings saved');
