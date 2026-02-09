@@ -699,12 +699,12 @@
 
                     <div class="card" id="clientProjectsCard" style="display: none;">
                         <div class="card-header">
-                            <span class="card-title">Hours by Project</span>
+                            <span class="card-title">Hours by Staff</span>
                         </div>
                         <table class="service-table">
                             <thead>
                                 <tr>
-                                    <th>Project</th>
+                                    <th>Staff</th>
                                     <th>Hours</th>
                                     <th>Percentage</th>
                                 </tr>
@@ -957,6 +957,11 @@
                         <p>Fetching client data</p>
                     `;
                     try {
+                        // Load staff names if not already loaded
+                        if (!staffLoaded) {
+                            await fetchStaffMembers();
+                            staffLoaded = true;
+                        }
                         await fetchClientEstimates();
                         populateClientDropdown();
                         clientsLoaded = true;
@@ -1584,63 +1589,67 @@
                 return;
             }
 
-            // Group by project
-            const hoursByProject = {};
+            // Group by staff member
+            const hoursByStaff = {};
             timeEntries.forEach(te => {
-                const projectId = te.project_id || 'no_project';
-                if (!hoursByProject[projectId]) hoursByProject[projectId] = 0;
-                hoursByProject[projectId] += te.duration / 3600;
+                const staffId = te.identity_id || 'unknown';
+                if (!hoursByStaff[staffId]) hoursByStaff[staffId] = 0;
+                hoursByStaff[staffId] += te.duration / 3600;
             });
 
-            const chartData = Object.entries(hoursByProject)
-                .map(([projectId, hours]) => {
-                    const projectName = window.projectNameMap ? window.projectNameMap[projectId] : null;
-                    return { projectId, name: projectName || (projectId === 'no_project' ? 'No Project' : `Project ${projectId}`), hours };
+            const staffData = Object.entries(hoursByStaff)
+                .map(([staffId, hours]) => {
+                    const staffName = window.staffNameMap ? window.staffNameMap[staffId] : null;
+                    return { staffId, name: staffName || `Staff ${staffId}`, hours };
                 })
                 .sort((a, b) => b.hours - a.hours);
 
-            updateClientChart(clientName, chartData, estimated, totalHours);
-            updateClientProjectsTable(chartData, totalHours);
+            updateClientChart(clientName, staffData, estimated, totalHours);
+            updateClientStaffTable(staffData, totalHours);
         }
 
-        function updateClientChart(clientName, chartData, estimated, actual) {
+        function updateClientChart(clientName, staffData, estimated, actual) {
             document.getElementById('clientChartContainer').style.display = 'block';
             const ctx = document.getElementById('clientHoursChart').getContext('2d');
             if (clientChart) clientChart.destroy();
 
-            // Horizontal bar showing estimated vs actual
+            // Horizontal bar showing hours by staff
             clientChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Hours'],
-                    datasets: [
-                        { label: 'Estimated', data: [estimated], backgroundColor: 'rgba(88, 166, 255, 0.7)', borderColor: 'rgba(88, 166, 255, 1)', borderWidth: 2, borderRadius: 6, barPercentage: 0.6 },
-                        { label: 'Actual', data: [actual], backgroundColor: actual > estimated ? 'rgba(248, 81, 73, 0.7)' : 'rgba(63, 185, 80, 0.7)', borderColor: actual > estimated ? 'rgba(248, 81, 73, 1)' : 'rgba(63, 185, 80, 1)', borderWidth: 2, borderRadius: 6, barPercentage: 0.6 }
-                    ]
+                    labels: staffData.map(s => s.name),
+                    datasets: [{
+                        label: 'Hours',
+                        data: staffData.map(s => s.hours),
+                        backgroundColor: 'rgba(88, 166, 255, 0.7)',
+                        borderColor: 'rgba(88, 166, 255, 1)',
+                        borderWidth: 2,
+                        borderRadius: 6
+                    }]
                 },
                 options: {
                     responsive: true, maintainAspectRatio: false, indexAxis: 'y',
                     plugins: {
-                        legend: { position: 'top', labels: { color: '#8b949e', font: { family: "'DM Sans', sans-serif", size: 13 }, padding: 20, usePointStyle: true, pointStyle: 'rectRounded' } },
-                        title: { display: true, text: `${clientName} - Monthly Hours`, color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 18, weight: '600' }, padding: { bottom: 20 } },
-                        tooltip: { backgroundColor: '#21262d', titleColor: '#e6edf3', bodyColor: '#8b949e', borderColor: '#30363d', borderWidth: 1, cornerRadius: 8, padding: 12, callbacks: { label: function(context) { return `${context.dataset.label}: ${context.raw.toFixed(1)} hours`; } } }
+                        legend: { display: false },
+                        title: { display: true, text: `${clientName} - Hours by Staff`, color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 18, weight: '600' }, padding: { bottom: 20 } },
+                        tooltip: { backgroundColor: '#21262d', titleColor: '#e6edf3', bodyColor: '#8b949e', borderColor: '#30363d', borderWidth: 1, cornerRadius: 8, padding: 12, callbacks: { label: function(context) { return `${context.raw.toFixed(1)} hours`; } } }
                     },
                     scales: {
                         x: { beginAtZero: true, grid: { color: 'rgba(48, 54, 61, 0.5)', drawBorder: false }, ticks: { color: '#8b949e', font: { family: "'Space Mono', monospace" }, callback: function(value) { return value + 'h'; } } },
-                        y: { grid: { display: false }, ticks: { display: false } }
+                        y: { grid: { display: false }, ticks: { color: '#e6edf3', font: { family: "'DM Sans', sans-serif", size: 11 } } }
                     }
                 }
             });
         }
 
-        function updateClientProjectsTable(projectData, totalHours) {
+        function updateClientStaffTable(staffData, totalHours) {
             document.getElementById('clientProjectsCard').style.display = 'block';
             const tbody = document.getElementById('clientProjectsTableBody');
-            tbody.innerHTML = projectData.map(project => {
-                const percentage = totalHours > 0 ? (project.hours / totalHours) * 100 : 0;
+            tbody.innerHTML = staffData.map(staff => {
+                const percentage = totalHours > 0 ? (staff.hours / totalHours) * 100 : 0;
                 return `<tr>
-                    <td class="service-name">${project.name}</td>
-                    <td>${project.hours.toFixed(1)}h</td>
+                    <td class="service-name">${staff.name}</td>
+                    <td>${staff.hours.toFixed(1)}h</td>
                     <td>${percentage.toFixed(1)}%</td>
                 </tr>`;
             }).join('');
